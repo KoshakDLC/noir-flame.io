@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NOIR FLAME | Fine Dining</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: #050608;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* CANVAS BACKGROUND */
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.2), rgba(0,0,0,0.92));
+    z-index: -1;
+  }
+
+  /* HERO */
+  header {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .hero {
+    max-width: 900px;
+    animation: fadeUp 1.5s ease;
+  }
+
+  .hero h1 {
+    font-size: 76px;
+    letter-spacing: 4px;
+  }
+
+  .hero p {
+    margin-top: 20px;
+    color: #cfcfcf;
+    font-size: 18px;
+  }
+
+  .btn {
+    margin-top: 30px;
+    display: inline-block;
+    padding: 14px 30px;
+    background: linear-gradient(135deg, #c89b3c, #f5d77a);
+    color: #000;
+    font-weight: 700;
+    border-radius: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 40px rgba(255,215,120,0.25);
+  }
+
+  section {
+    padding: 90px 20px;
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  h2 {
+    font-size: 34px;
+    margin-bottom: 20px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    padding: 20px;
+    border-radius: 16px;
+    transition: 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    background: rgba(255,255,255,0.08);
+  }
+
+  .price {
+    margin-top: 10px;
+    color: #f5d77a;
+    font-weight: 600;
+  }
+
+  /* BOOKING */
+  .booking {
+    background: rgba(255,255,255,0.04);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: #111;
+    color: #fff;
+  }
+
+  /* MODAL */
+  .modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.7);
+  }
+
+  .modal-content {
+    background: #111;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px;
+    color: #777;
+  }
+
+  @keyframes fadeUp {
+    from {opacity:0; transform:translateY(30px);}
+    to {opacity:1; transform:translateY(0);}
+  }
+</style>
+</head>
+
+<body>
+
+<canvas id="fire"></canvas>
+<div class="overlay"></div>
+
+<header>
+  <div class="hero">
+    <h1>NOIR FLAME</h1>
+    <p>Fine Dining Experience of Fire, Smoke & Precision Cuisine</p>
+    <a href="#menu" class="btn">Explore Menu</a>
+  </div>
+</header>
+
+<section>
+  <h2>Концепция</h2>
+  <div class="card">
+    NOIR FLAME — это гастрономический театр. Огонь, дым, выдержанное мясо и минимализм.
+    Каждое блюдо — это постановка вкуса и текстуры.
+  </div>
+</section>
+
+<section id="menu">
+  <h2>Меню</h2>
+  <div class="grid">
+
+    <div class="card">
+      Ribeye Dry Aged
+      <div class="price">189 PLN</div>
+    </div>
+
+    <div class="card">
+      Filet Mignon Truffle
+      <div class="price">210 PLN</div>
+    </div>
+
+    <div class="card">
+      BBQ Bourbon Ribs
+      <div class="price">145 PLN</div>
+    </div>
+
+    <div class="card">
+      Chef Fire Experience
+      <div class="price">320 PLN</div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>Бронирование</h2>
+
+  <div class="booking">
+    <input id="name" placeholder="Ваше имя" />
+    <input id="phone" placeholder="Телефон" />
+    <input type="date" id="date" />
+    <input type="time" id="time" />
+    <select id="people">
+      <option>1 человек</option>
+      <option>2 человека</option>
+      <option>3–4 человека</option>
+      <option>5+ человек</option>
+    </select>
+
+    <a class="btn" onclick="bookTable()">Забронировать</a>
+  </div>
+</section>
+
+<section>
+  <h2>Контакты</h2>
+  <div class="card">
+    📍 Warsaw, Flame District 9<br>
+    📞 +48 733 920 118<br>
+    ✉️ reservations@noirflame.pl
+  </div>
+</section>
+
+<footer>
+  © 2026 NOIR FLAME
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h2>Бронирование подтверждено</h2>
+    <p>Мы скоро свяжемся с вами</p>
+    <br>
+    <a class="btn" onclick="closeModal()">OK</a>
+  </div>
+</div>
+
+<script>
+/* MODAL */
+function bookTable() {
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+/* FIRE PARTICLES */
+const canvas = document.getElementById("fire");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function Particle() {
+  this.x = Math.random() * canvas.width;
+  this.y = canvas.height + Math.random() * 100;
+  this.size = Math.random() * 4 + 1;
+  this.speedY = Math.random() * 3 + 1;
+  this.color = `rgba(255, ${Math.random()*150+100}, 0, 0.7)`;
+}
+
+Particle.prototype.update = function() {
+  this.y -= this.speedY;
+  if (this.y < 0) {
+    this.y = canvas.height;
+  }
+};
+
+Particle.prototype.draw = function() {
+  ctx.fillStyle = this.color;
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+  ctx.fill();
+};
+
+function init() {
+  for (let i = 0; i < 120; i++) {
+    particles.push(new Particle());
+  }
+}
+
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+
+init();
+animate();
+</script>
+
+</body>
+</html>
